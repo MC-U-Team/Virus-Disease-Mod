@@ -1,0 +1,10 @@
+{
+	"effect.virusdiseasespread.infected": "Infected",
+	"event.virusdiseasespread.infection_prob_message": "Infection probablility is now %s",
+	"event.virusdiseasespread.washing_message": "Washing: %s",
+	"item.minecraft.lingering_potion.effect.infected": "Lingering Potion of Viruses",
+	"item.minecraft.potion.effect.infected": "Potion of Viruses",
+	"item.minecraft.splash_potion.effect.infected": "Splash Potion of Viruses",
+	"item.virusdiseasespread.probability_test": "Probability Test",
+	"itemGroup.virusdiseasespread.group": "Virus Disease Spread"
+}

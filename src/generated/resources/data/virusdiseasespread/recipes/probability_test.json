@@ -1,0 +1,17 @@
+{
+	"type": "minecraft:crafting_shapeless",
+	"ingredients": [
+		{
+			"item": "minecraft:potion"
+		},
+		{
+			"item": "minecraft:stick"
+		},
+		{
+			"item": "minecraft:iron_nugget"
+		}
+	],
+	"result": {
+		"item": "virusdiseasespread:probability_test"
+	}
+}
