@@ -3,8 +3,8 @@ loaderVersion="[28,)"
 issueTrackerURL="https://github.com/MC-U-Team/Virus-Disease-Mod/issues"
 displayURL="https://u-team.info/mods/virusdiseasemod"
 logoFile="logo.png"
-credits="Team U-Team"
-authors="HyCraftHD"
+credits="LeKoopa and Team U-Team"
+authors="HyCraftHD, LeKoopa"
 
 [[mods]]
 	modId="virusdiseasespread"
