@@ -1,7 +1,7 @@
 modLoader="javafml"
 loaderVersion="[28,)"
-issueTrackerURL="https://github.com/MC-U-Team/XXX/issues"
-displayURL="https://u-team.info/mods/xxx"
+issueTrackerURL="https://github.com/MC-U-Team/Virus-Disease-Mod/issues"
+displayURL="https://u-team.info/mods/virusdiseasemod"
 logoFile="logo.png"
 credits="Team U-Team"
 authors="HyCraftHD"
@@ -9,8 +9,8 @@ authors="HyCraftHD"
 [[mods]]
 	modId="virusdiseasespread"
 	version="${file.jarVersion}"
-	displayName="Virus Disease Spread"
-	#updateJSONURL="https://api.u-team.info/update/XXX.json"
+	displayName="Virus Disease Spread Mod"
+	updateJSONURL="https://api.u-team.info/update/virusdiseasemod.json"
 	description="This mod is designed to draw attention to the corona pandemic and show what happens when social distancing is not practiced. This mod was created in cooperation with LeKoopa. For more information about corona please have a look at the who website: http://who.int/emergencies"
 	
 	[[dependencies.virusdiseasespread]]
