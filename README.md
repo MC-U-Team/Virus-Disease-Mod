@@ -8,7 +8,7 @@
 ![Discord](https://img.shields.io/discord/297104769649213441?label=Discord)
 ](https://discordapp.com/invite/QXbWS36)
 
-### This mod adds three new backpacks to the game which enhance your gaming experience.
+### This mod is designed to draw attention to the current pandemic and show what happens when social distancing is not practiced.
 
 - Download on [curseforge](https://www.curseforge.com/minecraft/mc-mods/virus-disease-mod).  
 - Find more information on our [website](https://u-team.info/mods/virusdiseasemod).
