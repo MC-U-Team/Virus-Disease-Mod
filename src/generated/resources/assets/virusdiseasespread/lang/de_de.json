@@ -5,6 +5,7 @@
 	"item.minecraft.lingering_potion.effect.infected": "Verweiltrank des Viruses",
 	"item.minecraft.potion.effect.infected": "Trank des Viruses",
 	"item.minecraft.splash_potion.effect.infected": "Wurftrank des Viruses",
+	"item.minecraft.tipped_arrowt.effect.infected": "Pfeil des Viruses",
 	"item.virusdiseasespread.probability_test": "Wahrscheinlichkeitstest",
 	"itemGroup.virusdiseasespread.group": "Verbreitung von Viruserkrankungen"
 }

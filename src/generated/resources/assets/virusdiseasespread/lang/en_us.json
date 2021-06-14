@@ -5,6 +5,7 @@
 	"item.minecraft.lingering_potion.effect.infected": "Lingering Potion of Viruses",
 	"item.minecraft.potion.effect.infected": "Potion of Viruses",
 	"item.minecraft.splash_potion.effect.infected": "Splash Potion of Viruses",
+	"item.minecraft.tipped_arrowt.effect.infected": "Arrow of Viruses",
 	"item.virusdiseasespread.probability_test": "Probability Test",
 	"itemGroup.virusdiseasespread.group": "Virus Disease Spread"
 }
