@@ -2,17 +2,19 @@ package info.u_team.virus_disease_spread.effect;
 
 import java.util.Random;
 
-import info.u_team.u_team_core.effect.UEffect;
 import info.u_team.virus_disease_spread.config.CommonConfig;
 import net.minecraft.entity.LivingEntity;
-import net.minecraft.potion.*;
+import net.minecraft.potion.Effect;
+import net.minecraft.potion.EffectInstance;
+import net.minecraft.potion.EffectType;
+import net.minecraft.potion.Effects;
 
-public class InfectedEffect extends UEffect {
+public class InfectedEffect extends Effect {
 	
 	private final Random random;
 	
-	public InfectedEffect(String name) {
-		super(name, EffectType.HARMFUL, 0x258573);
+	public InfectedEffect() {
+		super(EffectType.HARMFUL, 0x258573);
 		random = new Random();
 	}
 	
