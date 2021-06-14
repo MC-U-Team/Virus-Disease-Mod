@@ -124,7 +124,11 @@ public class CommonEventHandler {
 	}
 	
 	private static boolean isInBase(ServerPlayerEntity player) {
-		final BlockPos spawnPos = player.getBedLocation(player.dimension);
+		if (player.func_241141_L_() != player.world.getDimensionKey()) {
+			return false;
+		}
+		
+		final BlockPos spawnPos = player.func_241140_K_();
 		if (spawnPos == null) {
 			return false;
 		}
