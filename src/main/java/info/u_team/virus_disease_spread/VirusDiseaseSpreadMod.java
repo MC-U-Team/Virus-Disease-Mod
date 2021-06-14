@@ -1,5 +1,6 @@
 package info.u_team.virus_disease_spread;
 
+import info.u_team.u_team_core.util.annotation.AnnotationManager;
 import info.u_team.u_team_core.util.verify.JarSignVerifier;
 import info.u_team.virus_disease_spread.config.CommonConfig;
 import net.minecraftforge.fml.ModLoadingContext;
@@ -13,7 +14,8 @@ public class VirusDiseaseSpreadMod {
 	
 	public VirusDiseaseSpreadMod() {
 		JarSignVerifier.checkSigned(MODID);
-		ModLoadingContext.get().registerConfig(Type.COMMON, CommonConfig.CONFIG);
+		
+		AnnotationManager.callAnnotations(MODID);
 	}
 	
 }

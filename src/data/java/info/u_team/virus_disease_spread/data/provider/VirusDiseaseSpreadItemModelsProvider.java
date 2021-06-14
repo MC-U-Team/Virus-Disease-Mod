@@ -11,7 +11,7 @@ public class VirusDiseaseSpreadItemModelsProvider extends CommonItemModelsProvid
 	
 	@Override
 	protected void registerModels() {
-		simpleHandheld(VirusDiseaseSpreadItems.PROBABILITY_TEST);
+		simpleHandheld(VirusDiseaseSpreadItems.PROBABILITY_TEST.get());
 	}
 	
 }

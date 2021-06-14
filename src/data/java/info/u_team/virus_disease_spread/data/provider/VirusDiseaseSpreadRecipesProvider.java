@@ -17,7 +17,7 @@ public class VirusDiseaseSpreadRecipesProvider extends CommonRecipesProvider {
 	
 	@Override
 	protected void registerRecipes(Consumer<IFinishedRecipe> consumer) {
-		ShapelessRecipeBuilder.shapelessRecipe(VirusDiseaseSpreadItems.PROBABILITY_TEST) //
+		ShapelessRecipeBuilder.shapelessRecipe(VirusDiseaseSpreadItems.PROBABILITY_TEST.get()) //
 				.addIngredient(Ingredient.fromStacks(PotionUtils.addPotionToItemStack(new ItemStack(Items.POTION), Potions.WATER))) //
 				.addIngredient(Items.STICK) //
 				.addIngredient(Items.IRON_NUGGET) //

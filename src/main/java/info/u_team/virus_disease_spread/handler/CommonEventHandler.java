@@ -33,11 +33,11 @@ public class CommonEventHandler {
 			player.getPersistentData().putInt("wash", 0);
 		}
 		
-		if (player.getActivePotionEffect(VirusDiseaseSpreadEffects.INFECTED) != null) {
+		if (player.getActivePotionEffect(VirusDiseaseSpreadEffects.INFECTED.get()) != null) {
 			if (world.getRandom().nextInt(50) == 0) {
 				final PlayerEntity other = world.getClosestPlayer(player, 3);
 				if (other != null && player != other) {
-					if (other.getActivePotionEffect(VirusDiseaseSpreadEffects.INFECTED) == null) {
+					if (other.getActivePotionEffect(VirusDiseaseSpreadEffects.INFECTED.get()) == null) {
 						if (player.getDistance(other) < 1) {
 							updateInfection(other, 90);
 						}
@@ -57,7 +57,7 @@ public class CommonEventHandler {
 				int value = getInfection(player) + world.getRandom().nextInt(3) + 1;
 				if (value >= 100) {
 					value = 0;
-					player.addPotionEffect(new EffectInstance(VirusDiseaseSpreadEffects.INFECTED, 24000 * CommonConfig.getInstance().howManyDaysInfected.get(), world.getRandom().nextInt(3), false, false));
+					player.addPotionEffect(new EffectInstance(VirusDiseaseSpreadEffects.INFECTED.get(), 24000 * CommonConfig.getInstance().howManyDaysInfected.get(), world.getRandom().nextInt(3), false, false));
 				}
 				setInfection(player, value);
 			}
@@ -106,7 +106,7 @@ public class CommonEventHandler {
 	
 	@SubscribeEvent
 	public static void remove(PotionRemoveEvent event) {
-		if (event.getPotion() == VirusDiseaseSpreadEffects.INFECTED) {
+		if (event.getPotion() == VirusDiseaseSpreadEffects.INFECTED.get()) {
 			event.setCanceled(true);
 		}
 	}

@@ -6,6 +6,6 @@ import net.minecraft.item.ItemGroup;
 
 public class VirusDiseaseSpreadItemGroups {
 	
-	public static final ItemGroup GROUP = new UItemGroup(VirusDiseaseSpreadMod.MODID, "group", () -> VirusDiseaseSpreadItems.PROBABILITY_TEST);
+	public static final ItemGroup GROUP = new UItemGroup(VirusDiseaseSpreadMod.MODID, "group", VirusDiseaseSpreadItems.PROBABILITY_TEST);
 	
 }

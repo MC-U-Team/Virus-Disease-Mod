@@ -12,7 +12,7 @@ public class VirusDiseaseSpreadLanguagesProvider extends CommonLanguagesProvider
 	@Override
 	public void addTranslations() {
 		// English
-		add(VirusDiseaseSpreadEffects.INFECTED, "Infected");
+		addEffect(VirusDiseaseSpreadEffects.INFECTED, "Infected");
 		
 		add("item.minecraft.potion.effect.infected", "Potion of Viruses");
 		add("item.minecraft.splash_potion.effect.infected", "Splash Potion of Viruses");
@@ -23,11 +23,11 @@ public class VirusDiseaseSpreadLanguagesProvider extends CommonLanguagesProvider
 		
 		add(VirusDiseaseSpreadItemGroups.GROUP, "Virus Disease Spread");
 		
-		add(VirusDiseaseSpreadItems.PROBABILITY_TEST, "Probability Test");
+		addItem(VirusDiseaseSpreadItems.PROBABILITY_TEST, "Probability Test");
 		
 		// German
 		
-		add("de_de", VirusDiseaseSpreadEffects.INFECTED, "Infiziert");
+		addEffect("de_de", VirusDiseaseSpreadEffects.INFECTED, "Infiziert");
 		
 		add("de_de", "item.minecraft.potion.effect.infected", "Trank des Viruses");
 		add("de_de", "item.minecraft.splash_potion.effect.infected", "Wurftrank des Viruses");
@@ -38,7 +38,7 @@ public class VirusDiseaseSpreadLanguagesProvider extends CommonLanguagesProvider
 		
 		add("de_de", VirusDiseaseSpreadItemGroups.GROUP, "Verbreitung von Viruserkrankungen");
 		
-		add("de_de", VirusDiseaseSpreadItems.PROBABILITY_TEST, "Wahrscheinlichkeitstest");
+		addItem("de_de", VirusDiseaseSpreadItems.PROBABILITY_TEST, "Wahrscheinlichkeitstest");
 	}
 	
 }

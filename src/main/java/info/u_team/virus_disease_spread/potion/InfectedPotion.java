@@ -7,6 +7,6 @@ import net.minecraft.potion.Potion;
 public class InfectedPotion extends Potion {
 	
 	public InfectedPotion(int duration, int amplifier) {
-		super("infected", new EffectInstance(VirusDiseaseSpreadEffects.INFECTED, duration, amplifier));
+		super("infected", new EffectInstance(VirusDiseaseSpreadEffects.INFECTED.get(), duration, amplifier));
 	}
 }
