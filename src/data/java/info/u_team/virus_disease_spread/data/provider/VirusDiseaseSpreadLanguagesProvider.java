@@ -20,6 +20,7 @@ public class VirusDiseaseSpreadLanguagesProvider extends CommonLanguagesProvider
 		add("item.minecraft.potion.effect.infected", "Potion of Viruses");
 		add("item.minecraft.splash_potion.effect.infected", "Splash Potion of Viruses");
 		add("item.minecraft.lingering_potion.effect.infected", "Lingering Potion of Viruses");
+		add("item.minecraft.tipped_arrowt.effect.infected", "Arrow of Viruses");
 		
 		add("event.virusdiseasespread.infection_prob_message", "Infection probablility is now %s");
 		add("event.virusdiseasespread.washing_message", "Washing: %s");
@@ -35,6 +36,7 @@ public class VirusDiseaseSpreadLanguagesProvider extends CommonLanguagesProvider
 		add("de_de", "item.minecraft.potion.effect.infected", "Trank des Viruses");
 		add("de_de", "item.minecraft.splash_potion.effect.infected", "Wurftrank des Viruses");
 		add("de_de", "item.minecraft.lingering_potion.effect.infected", "Verweiltrank des Viruses");
+		add("de_de", "item.minecraft.tipped_arrowt.effect.infected", "Pfeil des Viruses");
 		
 		add("de_de", "event.virusdiseasespread.infection_prob_message", "Infektionswahrscheinlichkeit ist nun %s");
 		add("de_de", "event.virusdiseasespread.washing_message", "Waschen: %s");
