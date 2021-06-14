@@ -2,12 +2,16 @@ package info.u_team.virus_disease_spread.data.provider;
 
 import java.util.function.Consumer;
 
-import info.u_team.u_team_core.data.*;
+import info.u_team.u_team_core.data.CommonRecipesProvider;
+import info.u_team.u_team_core.data.GenerationData;
 import info.u_team.virus_disease_spread.init.VirusDiseaseSpreadItems;
-import net.minecraft.data.*;
-import net.minecraft.item.*;
+import net.minecraft.data.IFinishedRecipe;
+import net.minecraft.data.ShapelessRecipeBuilder;
+import net.minecraft.item.ItemStack;
+import net.minecraft.item.Items;
 import net.minecraft.item.crafting.Ingredient;
-import net.minecraft.potion.*;
+import net.minecraft.potion.PotionUtils;
+import net.minecraft.potion.Potions;
 
 public class VirusDiseaseSpreadRecipesProvider extends CommonRecipesProvider {
 	

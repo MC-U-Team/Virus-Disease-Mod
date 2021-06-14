@@ -1,7 +1,10 @@
 package info.u_team.virus_disease_spread.data.provider;
 
-import info.u_team.u_team_core.data.*;
-import info.u_team.virus_disease_spread.init.*;
+import info.u_team.u_team_core.data.CommonLanguagesProvider;
+import info.u_team.u_team_core.data.GenerationData;
+import info.u_team.virus_disease_spread.init.VirusDiseaseSpreadEffects;
+import info.u_team.virus_disease_spread.init.VirusDiseaseSpreadItemGroups;
+import info.u_team.virus_disease_spread.init.VirusDiseaseSpreadItems;
 
 public class VirusDiseaseSpreadLanguagesProvider extends CommonLanguagesProvider {
 	

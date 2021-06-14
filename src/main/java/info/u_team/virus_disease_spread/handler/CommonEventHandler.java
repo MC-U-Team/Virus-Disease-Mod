@@ -67,10 +67,7 @@ public class CommonEventHandler {
 		final BlockState state = world.getBlockState(pos);
 		final PlayerEntity player = event.getPlayer();
 		
-		if (world.isRemote()) {
-			return;
-		}
-		if (!(state.getBlock() instanceof CauldronBlock)) {
+		if (world.isRemote() || !(state.getBlock() instanceof CauldronBlock)) {
 			return;
 		}
 		final int level = state.get(CauldronBlock.LEVEL);

@@ -2,7 +2,9 @@ package info.u_team.virus_disease_spread.data;
 
 import info.u_team.u_team_core.data.GenerationData;
 import info.u_team.virus_disease_spread.VirusDiseaseSpreadMod;
-import info.u_team.virus_disease_spread.data.provider.*;
+import info.u_team.virus_disease_spread.data.provider.VirusDiseaseSpreadItemModelsProvider;
+import info.u_team.virus_disease_spread.data.provider.VirusDiseaseSpreadLanguagesProvider;
+import info.u_team.virus_disease_spread.data.provider.VirusDiseaseSpreadRecipesProvider;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber.Bus;
