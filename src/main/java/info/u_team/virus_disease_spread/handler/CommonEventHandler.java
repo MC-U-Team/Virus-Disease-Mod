@@ -1,10 +1,11 @@
 package info.u_team.virus_disease_spread.handler;
 
-import info.u_team.virus_disease_spread.VirusDiseaseSpreadMod;
 import info.u_team.virus_disease_spread.config.CommonConfig;
 import info.u_team.virus_disease_spread.init.VirusDiseaseSpreadEffects;
-import net.minecraft.block.*;
-import net.minecraft.entity.player.*;
+import net.minecraft.block.BlockState;
+import net.minecraft.block.CauldronBlock;
+import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.particles.ParticleTypes;
 import net.minecraft.potion.EffectInstance;
 import net.minecraft.util.math.BlockPos;
@@ -14,15 +15,11 @@ import net.minecraft.world.server.ServerWorld;
 import net.minecraftforge.event.entity.living.LivingEvent.LivingUpdateEvent;
 import net.minecraftforge.event.entity.living.PotionEvent.PotionRemoveEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent.RightClickBlock;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
-import net.minecraftforge.fml.common.Mod.EventBusSubscriber.Bus;
+import net.minecraftforge.eventbus.api.IEventBus;
 
-@EventBusSubscriber(modid = VirusDiseaseSpreadMod.MODID, bus = Bus.FORGE)
 public class CommonEventHandler {
 	
-	@SubscribeEvent
-	public static void update(LivingUpdateEvent event) {
+	public static void onLivingUpdate(LivingUpdateEvent event) {
 		if (!(event.getEntityLiving() instanceof ServerPlayerEntity)) {
 			return;
 		}
@@ -64,8 +61,7 @@ public class CommonEventHandler {
 		}
 	}
 	
-	@SubscribeEvent
-	public static void click(RightClickBlock event) {
+	public static void onRightClickBlock(RightClickBlock event) {
 		final World world = event.getWorld();
 		final BlockPos pos = event.getPos();
 		final BlockState state = world.getBlockState(pos);
@@ -104,12 +100,19 @@ public class CommonEventHandler {
 		player.getPersistentData().putInt("wash", value);
 	}
 	
-	@SubscribeEvent
-	public static void remove(PotionRemoveEvent event) {
+	public static void onPotionRemove(PotionRemoveEvent event) {
 		if (event.getPotion() == VirusDiseaseSpreadEffects.INFECTED.get()) {
 			event.setCanceled(true);
 		}
 	}
+	
+	public static void registerForge(IEventBus bus) {
+		bus.addListener(CommonEventHandler::onLivingUpdate);
+		bus.addListener(CommonEventHandler::onRightClickBlock);
+		bus.addListener(CommonEventHandler::onPotionRemove);
+	}
+	
+	// Helper methods for the event handler
 	
 	private static void setInfection(PlayerEntity player, int value) {
 		player.getPersistentData().putInt("infection", value);
