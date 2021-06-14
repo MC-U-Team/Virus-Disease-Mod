@@ -1,163 +1,116 @@
 buildscript {
-    repositories {
-        maven { url = "https://files.minecraftforge.net/maven" }
-		maven { url = "https://plugins.gradle.org/m2/" }
-        jcenter()
-        mavenCentral()
-    }
-    dependencies {
-        classpath group: "net.minecraftforge.gradle", name: "ForgeGradle", version: "3.+", changing: true
-		classpath "gradle.plugin.com.matthewprenger:CurseGradle:1.3.0"
-    }
-}
-
-apply from: "https://raw.githubusercontent.com/HyCraftHD/Blank-Forge-Project/master/configuration.methods"
-apply from: "https://raw.githubusercontent.com/HyCraftHD/Blank-Forge-Project/master/git.methods"
-
-import net.minecraftforge.gradle.common.task.SignJar
-import org.gradle.api.internal.artifacts.dsl.LazyPublishArtifact
-
-setup()
-info()
-
-apply plugin: "net.minecraftforge.gradle"
-apply plugin: "eclipse"
-apply plugin: "com.matthewprenger.cursegradle"
-apply plugin: "maven"
-
-repositories {
-    maven { url = "https://repo.u-team.info" }
-    maven { url = "https://dvs1.progwml6.com/files/maven" }
-}
-
-getBuildNumber()
-
-group = "info.u-team"
-archivesBaseName = "${config.mod.filename}-${config.forge.mcversion}"
-version = "${config.mod.version}.${config.buildnumber}" + getAppendix();
-
-def getAppendix() {
-	if("${config.mod.snapshot}".toBoolean()) {
-		return "-SNAPSHOT"
-	} else {
-		return ""
+	repositories {
+		maven {
+			url = "https://maven.minecraftforge.net"
+		}
+		maven {
+			url = "https://repo.u-team.info"
+		}
+		mavenCentral()
+	}
+	dependencies {
+		classpath group: "net.minecraftforge.gradle", name: "ForgeGradle", version: "4.1.+", changing: true
+		classpath group: "info.u-team.curse_gradle_uploader", name: "curse_gradle_uploader", version: "1.4.1"
 	}
 }
 
-sourceCompatibility = targetCompatibility = "1.8"
+apply from: "https://gradle-files.u-team.info/default-project.gradle"
+
+apply plugin: "net.minecraftforge.gradle"
+apply plugin: "eclipse"
+apply plugin: "info.u_team.curse_gradle_uploader"
+apply plugin: "maven-publish"
+
+group = "info.u-team"
+archivesBaseName = generateArchivesBaseName()
+version = generateVersion()
+
+java {
+	toolchain {
+		languageVersion = JavaLanguageVersion.of(8)
+	}
+}
 
 minecraft {
-    mappings channel: config.forge.mapping_channel, version: config.forge.mapping
-    runs {
-        client = {
-            workingDirectory project.file("run/client").canonicalPath
-            mods {
-                virusdiseasespread {
-                    source sourceSets.main
+	mappings channel: config.forge.mapping_channel, version: config.forge.mapping
+	
+	runs {
+		client = {
+			workingDirectory project.file("run/client").canonicalPath
+			property "mixin.env.disableRefMap", "true"
+			mods {
+				"${config.mod.modid}" {
+					source sourceSets.main
 				}
 			}
-        }
-        server = {
-            workingDirectory project.file("run/server").canonicalPath
-            mods {
-                virusdiseasespread {
-                    source sourceSets.main
-				}
-			}
-        }
-        data = {
-            workingDirectory project.file("run/data").canonicalPath
-            args "--mod", "virusdiseasespread", "--all", "--output", "\"" + file("src/generated/resources").toString() + "\"", "--validate", "--existing", "\"" + sourceSets.main.resources.srcDirs[0] + "\""
-            mods {
-                virusdiseasespread {
-                    source sourceSets.main
-				}
-			}
-        }
-    }
-}
-
-def normalManifest = {
-	attributes(
-		"Specification-Title": config.mod.name,
-        "Specification-Vendor": "Team UTeam",
-        "Specification-Version": config.forge.major_version,
-		"Built-On": config.forge.mcversion,
-		"Implementation-Title": config.mod.name,
-    	"Implementation-Version": project.version,
-		"Implementation-Vendor": "Team UTeam",
-        "Implementation-Timestamp": new Date().format("yyyy-MM-dd'T'HH:mm:ssZ"),
-        "Fingerprint": project.findProperty("keystore.fingerprint") ?: "NONE"
-	)
-}
-
-
-def createSignJarTask(taskName, depends, file) {
-	tasks.create(name: taskName, type: SignJar) {
-		afterEvaluate {
-			dependsOn depends
 		}
-		if (project.hasProperty("keystore")) {
-			doLast {
-				println "Signing jar " + file.getName()
-			}
-			keyStore = project.findProperty("keystore")
-			alias = project.findProperty("keystore.alias")
-			storePass = project.findProperty("keystore.password")
-			keyPass = project.findProperty("keystore.password")
-			inputFile = file
-			outputFile = file
-		} else {
-			println "Could not sign " + file.getName() + ". No keystore property could be found"
+		client_first = {
+			parents runs.getByName("client")
+			workingDirectory project.file("run/client/one").canonicalPath
+			args "--username", "HyCraftHD", "--uuid", "d9202ce0-f6c1-4dc1-9341-2d9091764808"
 		}
-	}  
-}
-
-def signAllJars() {
-	configurations.archives.allArtifacts.each { artifact ->
-		if(!(artifact instanceof LazyPublishArtifact)) {
-			def taskName = "signJar${artifact.getClassifier()}"
-			createSignJarTask(taskName, artifact, artifact.getFile())
-			build.dependsOn taskName
+		client_second = {
+			parents runs.getByName("client")
+			workingDirectory project.file("run/client/second").canonicalPath
+			args "--username", "UTeam", "--uuid", "08e0d9d9-e948-40de-b68d-d5101571acf1"
+		}
+		server = {
+			workingDirectory project.file("run/server").canonicalPath
+			property "mixin.env.disableRefMap", "true"
+			mods {
+				"${config.mod.modid}" {
+					source sourceSets.main
+				}
+			}
+		}
+		data = {
+			workingDirectory project.file("run/data").canonicalPath
+			property "mixin.env.disableRefMap", "true"
+			args "--mod", config.mod.modid, "--all", "--output", "\"" + file("src/generated/resources").toString() + "\"", "--validate", "--existing", "\"" + sourceSets.main.resources.srcDirs[0] + "\""
+			mods {
+				"${config.mod.modid}" {
+					source sourceSets.main
+				}
+			}
 		}
 	}
 }
 
 jar {
 	classifier = ""
-
-    from "LICENSE"
-    
-    exclude(".cache")    
-       
-   	manifest normalManifest
+	
+	from "LICENSE"
+	
+	exclude(".cache")
+	
+	manifest normalManifest
 }
 
 task deobfJar(type: Jar) {
 	classifier = "dev"
-
-    from sourceSets.main.output
-    from "LICENSE"
-    
-    exclude(".cache")    
-        
-    manifest normalManifest
+	
+	from sourceSets.main.output
+	from "LICENSE"
+	
+	exclude(".cache")
+	
+	manifest normalManifest
 }
 
 task sourcesJar(type: Jar) {
-    classifier = "sources"
-    
-    from sourceSets.main.allJava
-    from "LICENSE"
+	classifier = "sources"
+	
+	from sourceSets.main.allJava
+	from "LICENSE"
 }
 
 task docJar(type: Jar) {
-    classifier = "javadoc"
-    
-    from javadoc
-    from "LICENSE"
-    
-    tasks.withType(Javadoc) {
+	classifier = "javadoc"
+	
+	from javadoc
+	from "LICENSE"
+	
+	tasks.withType(Javadoc) {
 		options.addStringOption('Xdoclint:none', '-quiet')
 		options.addStringOption('encoding', 'UTF-8')
 		options.addStringOption('charSet', 'UTF-8')
@@ -165,17 +118,21 @@ task docJar(type: Jar) {
 }
 
 artifacts {
-    archives deobfJar
-    archives sourcesJar
-    archives docJar
-    archives jar
+	archives jar
+	archives deobfJar
+	archives sourcesJar
+	archives docJar
 }
 
 signAllJars()
 
 sourceSets {
 	main {
-		java
+		java {
+			srcDirs += "src/data/java"
+			srcDirs += "src/api/java"
+			srcDirs += "src/integration/java"
+		}
 		resources {
 			srcDirs += "src/generated/resources"
 		}
@@ -183,110 +140,108 @@ sourceSets {
 }
 
 dependencies {
-    minecraft "net.minecraftforge:forge:$config.forge.version"
-	compile "info.u-team:u_team_core-${config.forge.mcversion}:${config.uteamcore.version}:dev"
-  	compileOnly fg.deobf("mezz.jei:jei-${config.forge.mcversion}:${config.jei.version}:api")
-  	runtimeOnly fg.deobf("mezz.jei:jei-${config.forge.mcversion}:${config.jei.version}")
-}
-
-compileJava {
-    options.encoding = "UTF-8"
-}
-
-def generateChangelogUrl() {
-	String url = "https://github.com/MC-U-Team/${config.github.name}/blob/${config.github.branch}/CHANGELOG.md"
-	String mcversion = "${config.forge.mcversion}".replace(".", "")
-	String version = "${project.version}".replace(".", "")
-	String date =new Date().format("yyyy-MM-dd");
-	return url + "#" + mcversion + "-" + version + "---" + date
+	minecraft getForgeDependency()
+	compileOnly getUTeamCoreDependency()
+	compileOnly fg.deobf(getJeiApiDependency())
+	runtimeOnly fg.deobf(getJeiDependency())
+	compileOnly fg.deobf(getCuriosApiDependency())
+	runtimeOnly fg.deobf(getCuriosDependency())
 }
 
 curseforge {
-	if(System.getenv("token") != null) {
-		apiKey = System.getenv("token")
-	} else {
-		if (project.hasProperty("token")) {
-			apiKey = project.getProperty("token")
-		} else {
-			apiKey = "mrTroble" //We dont have one lol ¯\_(ツ)_/¯
+	afterEvaluate {
+		tasks."curseforge${config.curse.id}".onlyIf {
+			getValue("token") != null
 		}
 	}
 	
 	tasks.curseforge.dependsOn build
 	
-  	project {
-    	id = config.curse.id
-    	releaseType = config.curse.type
-
-		addGameVersion config.forge.mcversion
+	apiKey = getValueDefault("token")
+	
+	project {
+		id = config.curse.id
+		releaseType = config.curse.type
 		
-		options {
-		    forgeGradleIntegration = false
-		}
+		addGameVersion config.forge.mcversion
+		addGameVersion "Forge"
+		addGameVersion "Java 8"
+		addGameVersion "Java 9"
+		addGameVersion "Java 10"
 		
 		relations {
-      		requiredDependency "u-team-core"
-    	}
-
-    	mainArtifact(jar) {
-      		displayName = "${config.curse.display}-${config.forge.mcversion}-${project.version}"
-      		changelogType = "html"
-      		changelog = "<a href=\"" + generateChangelogUrl() + "\">Changelog of ${project.version}</a>"
-    	}
-    	
-    	addArtifact(deobfJar) {
-    		displayName = "${config.curse.display}-${config.forge.mcversion}-${project.version}-dev"
-    		changelogType = "text"
-    		changelog = "Mappings: ${config.forge.mapping_channel}_${config.forge.mapping}"
-    	}
-  	}
+			requiredDependency "u-team-core"
+			optionalDependency "jei"
+			optionalDependency "curios"
+		}
+		
+		mainArtifact(jar) {
+			displayName = "${config.curse.display}-${config.forge.mcversion}-${project.version}"
+			changelogType = "html"
+			changelog = "<a href=\"" + generateChangelogUrl() + "\">Changelog of ${project.version}</a>"
+		}
+		
+		addArtifact(deobfJar) {
+			displayName = "${config.curse.display}-${config.forge.mcversion}-${project.version}-dev"
+			changelogType = "text"
+			changelog = "ONLY for development environment!\nMappings: ${config.forge.mapping_channel}_${config.forge.mapping}"
+		}
+	}
 }
 
-uploadArchives {
+tasks.withType(PublishToMavenRepository) {
+	onlyIf {
+		getValue("mavenpass") != null
+	}
+}
 
-	tasks.uploadArchives.dependsOn build
-
+publishing {
+	publish.dependsOn build
+	
 	repositories {
-		mavenDeployer {
-			String mavenPass = System.getenv("mavenpass")
-			if(mavenPass == null) {
-				mavenPass = project.getProperty("mavenpass")
+		maven {
+			url "https://repo.u-team.info"
+			credentials {
+				username = "maven"
+				password = getValue("mavenpass")
 			}
-			if (mavenPass != null) {
-				repository(url: "https://repo.u-team.info") {
-					authentication(userName: "maven", password: mavenPass)
-				}
-			}
+		}
+	}
+	publications {
+		mavenJava(MavenPublication) {
+			artifact jar
+			artifact deobfJar
+			artifact sourcesJar
+			artifact docJar
+			
+			groupId = project.group
+			artifactId = project.archivesBaseName
+			version = project.version
+			
 			pom {
-				groupId = project.group
-				artifactId = project.archivesBaseName
-				version = project.version
-				project {
-					name project.archivesBaseName
-					packaging "jar"
-					description "${config.github.name}"
-						url "https://github.com/MC-U-Team/${config.github.name}"
-					scm {
-						url "https://github.com/MC-U-Team/${config.github.name}"
-						connection "scm:git:git://github.com/MC-U-Team/${config.github.name}.git"
-						developerConnection "scm:git:git@github.com:MC-U-Team/${config.github.name}.git"
+				name = project.archivesBaseName
+				description = "${config.github.name}"
+				url = "https://github.com/MC-U-Team/${config.github.name}"
+				scm {
+					url = "https://github.com/MC-U-Team/${config.github.name}"
+					connection = "scm:git:git://github.com/MC-U-Team/${config.github.name}.git"
+					developerConnection = "scm:git:git@github.com:MC-U-Team/${config.github.name}.git"
+				}
+				
+				issueManagement {
+					system = "github"
+					url = "https://github.com/MC-U-Team/${config.github.name}/issues"
+				}
+				licenses {
+					license {
+						name = "Apache License 2.0"
+						url = "https://github.com/MC-U-Team/${config.github.name}/blob/${config.github.branch}/LICENSE"
+						distribution = "repo"
 					}
-					issueManagement {
-						system "github"
-						url "https://github.com/MC-U-Team/${config.github.name}/issues"
-					}
-					licenses {
-						license {
-							name "Apache License 2.0"
-							url "https://github.com/MC-U-Team/${config.github.name}/blob/${config.github.branch}/LICENSE"
-							distribution "repo"
-						}
-					}
-
-					developers {
-						developer {
-							name "HyCraftHD"
-						}
+				}
+				developers {
+					developer {
+						name = "HyCraftHD"
 					}
 				}
 			}
@@ -296,10 +251,17 @@ uploadArchives {
 
 task uploadBoth {
 	tasks.uploadBoth.dependsOn build
-	tasks.uploadBoth.dependsOn uploadArchives
+	tasks.uploadBoth.dependsOn publish
 	tasks.uploadBoth.dependsOn "curseforge${config.curse.id}"
 	tasks.uploadBoth.dependsOn setBuildNumber
+	tasks.uploadBoth.dependsOn tagRelease
 	doLast {
 		println "Published both"
+	}
+}
+
+gradle.taskGraph.whenReady {
+	if (gradle.taskGraph.hasTask(":curseforge${config.curse.id}") || gradle.taskGraph.hasTask(":publish")) {
+		validateBuild()
 	}
 }
